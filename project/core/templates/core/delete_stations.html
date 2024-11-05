@@ -19,8 +19,10 @@
             <p class="text-white mb-4">Are you sure you want to delete all stations for the project "{{ project.name }}"?</p>
             <form action="{% url 'delete_stations' project.id %}" method="POST">
                 {% csrf_token %}
-                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Delete All</button>
-                <a href="{% url 'stations' project.id %}" class="bg-blue-500 text-white px-4 py-2 rounded ml-2">Cancel</a>
+                <div class="flex justify-center space-x-2">
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded w-32">Delete All</button>
+                    <a href="{% url 'stations' project.id %}" class="bg-blue-500 text-white px-4 py-2 rounded w-32 text-center">Cancel</a>
+                </div>
             </form>
         </div>
     </div>
