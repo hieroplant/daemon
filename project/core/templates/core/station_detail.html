@@ -1,0 +1,29 @@
+{% load static %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station Details</title>
+    {% tailwind_css %}
+</head>
+
+<body class="bg-gray-700">
+    {% include 'core/partials/navbar.html' %}
+    <div class="drawer lg:drawer-open flex">
+        <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+        {% include 'core/partials/sidebarindex.html' %}
+    <div class="flex justify-center items-center h-screen">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl text-white mb-4">{{ station.name }}</h2>
+            <p class="text-white mb-4">{{ station.description }}</p>
+
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

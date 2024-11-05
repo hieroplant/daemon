@@ -1,0 +1,9 @@
+<!-- ikan/siakap/templates/siakap/partials/sidebarstation.html -->
+<div class="drawer-side">
+    <ul class="menu bg-gray-600 text-white min-h-full w-80 p-4">
+        <!-- Sidebar content here -->
+        <li class="hover:bg-gray-500"><a href="{% url 'upload_config' project_id %}">Upload config file</a></li>
+        <li class="hover:bg-gray-500"><a href="{% url 'delete_stations' project_id %}">Delete stations</a></li>
+        {% comment %} <li class="hover:bg-gray-500"><a href="{% url 'delete_stations' %}">Delete stations</a></li> {% endcomment %}
+    </ul>
+</div>
