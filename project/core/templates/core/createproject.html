@@ -27,14 +27,15 @@
                 {{ success }}
             </div>
             {% endif %}
-            <form method="POST" action="{% url 'create_project' %}" class="space-y-4" hx-post="{% url 'create_project' %}" hx-target="#form-container" hx-swap="outerHTML">
+            <form method="POST" action="{% url 'create_project' %}" class="space-y-4" hx-post="{% url 'create_project' %}"
+                hx-target="#form-container" hx-swap="outerHTML">
                 {% csrf_token %}
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700">Project Name</label>
                     <input type="text" name="name" id="name" placeholder="Project Name" required
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        hx-get="{% url 'check_project_name' %}" hx-trigger="keyup changed delay:500ms"
-                        hx-target="#name-warning" hx-swap="innerHTML">
+                        hx-get="{% url 'check_project_name' %}" hx-trigger="keyup changed delay:500ms" hx-target="#name-warning"
+                        hx-swap="innerHTML">
                 </div>
                 <div id="name-warning" class="text-red-600"></div>
                 <div>

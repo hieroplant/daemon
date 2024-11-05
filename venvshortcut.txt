@@ -1,0 +1,9 @@
+# create an alias called "ve" that looks for the relative location of -Value
+# and runs it.
+New-Alias -Name ve -Value venv/scripts/activate.ps1
+
+# Export the alias to a script.
+Export-Alias -Name ve -Path "venv.ps1" -As Script
+
+# Make sure this scripts runs each time you start a powershell session.
+Add-Content -Path $Profile -Value (Get-Content venv.ps1)

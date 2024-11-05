@@ -1,71 +1,80 @@
-{% load static %}
-{% load static tailwind_tags %}
+{% load static %} {% load static tailwind_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personal Finance Tracker</title>
     {% tailwind_css %}
     <script src="{% static 'htmx.min.js' %}" defer></script>
-</head>
+  </head>
 
-<body class="bg-gray-700">
-    {% include 'core/partials/navbar.html' %}
-    <div class="drawer lg:drawer-open flex">
-        <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-        {% include 'core/partials/sidebarindex.html' %}
-        <div class="drawer-content flex flex-col mt-10 ml-20 w-full">
-            <div class="overflow-x-auto flex flex-col items-center">
-                <h2 class="text-3xl text-white mb-4">Projects</h2>
-                <table class="table w-full max-w-5xl bg-gray-700">
-                    <thead>
-                        <tr class="text-white h-12">
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if projects %}
-                            {% for project in projects %}
-                            <tr class="hover:bg-gray-600 text-white h-12">
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ project.name }}</td>
-                                <td>{{ project.description }}</td>
-                                <td>
-                                    <div class="flex items-center">
-                                        <form method="POST" action="{% url 'delete_project' project.id %}"
-                                            onsubmit="return confirm('Are you sure you want to delete this project?');" hx-delete
-                                            hx-target="#project-{{ project.id }}" hx-swap="outerHTML" class="mr-2">
-                                            {% csrf_token %}
-                                            <button type="submit" class="text-red-400 hover:text-red-600">
-                                                {% heroicon_outline "trash" %}
-                                            </button>
-                                        </form>
-                                        <form method="GET" action="{% url 'stations' project.id %}" style="display:inline;">
-                                            <button type="submit" class="text-blue-400 hover:text-blue-600">
-                                                {% heroicon_outline "folder-plus" %}
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        {% else %}
-                            <tr class="text-white h-12">
-                                <td colspan="4" class="text-center">No projects available.</td>
-                            </tr>
-                        {% endif %}
-                    </tbody>
-                </table>
-            </div>
+  <body class="bg-gray-12">
+    <!-- {% include 'core/partials/navbar.html' %} -->
+    <div class="flex min-h-screen">
+      <div class="w-80">{% include 'core/partials/sidebarindex.html' %}</div>
+
+      <div class="flex-grow p-4">
+        <div class="overflow-x-auto w-full">
+          <table class="table w-full bg-gray-700 text-white">
+            <thead class="text-lg">
+              <tr>
+                <th class="px-4 py-4 w-1/10">No.</th>
+                <th class="px-4 py-4 w-3/10">Project Name</th>
+                <th class="px-4 py-4 w-3/5"> Project Description</th>
+                <th class="px-4 py-4 w-2/10"></th>
+              </tr>
+            </thead>
+            <tbody class="text-base">
+              {% if projects %} {% for project in projects %}
+              <tr class="hover">
+                <th class="px-4 py-2">{{ forloop.counter }}</th>
+                <td class="px-4 py-2">{{ project.name }}</td>
+                <td class="px-4 py-2">{{ project.description }}</td>
+                <td class="px-4 py-2">
+                  <div class="flex items-center justify-end space-x-2"">
+                    <form
+                      method="POST"
+                      action="{% url 'delete_project' project.id %}"
+                      onsubmit="return confirm('Are you sure you want to delete this project?');"
+                      hx-delete
+                      hx-target="#project-{{ project.id }}"
+                      hx-swap="outerHTML"
+                      class="mr-2"
+                    >
+                      {% csrf_token %}
+                      <button
+                        type="submit"
+                        class="btn btn-outline btn-secondary text-right"
+                      >
+                        Delete
+                      </button>
+                    </form>
+                    <form
+                      method="GET"
+                      action="{% url 'stations' project.id %}"
+                      style="display: inline"
+                    >
+                      <button type="submit" class="btn btn-outline btn-accent">
+                        Detail
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %} {% else %}
+              <tr class="text-white h-12">
+                <td colspan="4" class="text-center px-4 py-2">
+                  No projects available.
+                </td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
