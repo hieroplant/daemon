@@ -4,37 +4,45 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personal Finance Tracker</title>
     {% tailwind_css %}
     <script src="{% static 'htmx.min.js' %}" defer></script>
   </head>
 
-  <body class="bg-gray-12">
-    <!-- {% include 'core/partials/navbar.html' %} -->
-    <div class="flex min-h-screen">
-      <div class="w-80">{% include 'core/partials/sidebarindex.html' %}</div>
+  <body class="bg-gray-900">
+    <!-- Navbar -->
+    <div class="bg-gray-900 w-full shadow-md">
+      {% include 'core/partials/navbars/navbar_index.html' %}
+    </div>
 
-      <div class="flex-grow p-4">
+    <!-- Sidebar and Main Content -->
+    <div class="flex">
+      <!-- Sidebar Below Navbar -->
+      <div class="w-64 h-screen bg-gray-900 border-r border-gray-700">
+        {% include 'core/partials/sidebars/sidebar_index.html' %}
+      </div>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6 bg-gray-900">W
         <div class="overflow-x-auto w-full">
-          <table class="table w-full bg-gray-700 text-white">
-            <thead class="text-lg">
+          <div class="max-w-6xl mx-auto">
+          <table class="table w-full bg-gray-900 text-white mt-20">
+            <thead class="text-lg text-white">W
               <tr>
                 <th class="px-4 py-4 w-1/10">No.</th>
                 <th class="px-4 py-4 w-3/10">Project Name</th>
-                <th class="px-4 py-4 w-3/5"> Project Description</th>
+                <th class="px-4 py-4 w-3/5">Project Description</th>
                 <th class="px-4 py-4 w-2/10"></th>
               </tr>
             </thead>
             <tbody class="text-base">
               {% if projects %} {% for project in projects %}
-              <tr class="hover">
+              <tr class="hover:bg-gray-600">
                 <th class="px-4 py-2">{{ forloop.counter }}</th>
                 <td class="px-4 py-2">{{ project.name }}</td>
                 <td class="px-4 py-2">{{ project.description }}</td>
                 <td class="px-4 py-2">
-                  <div class="flex items-center justify-end space-x-2"">
+                  <div class="flex items-center justify-end space-x-2">
                     <form
                       method="POST"
                       action="{% url 'delete_project' project.id %}"
@@ -47,8 +55,7 @@
                       {% csrf_token %}
                       <button
                         type="submit"
-                        class="btn btn-outline btn-secondary text-right"
-                      >
+                        class="btn btn-outline btn-secondary text-right">
                         Delete
                       </button>
                     </form>
@@ -66,15 +73,14 @@
               </tr>
               {% endfor %} {% else %}
               <tr class="text-white h-12">
-                <td colspan="4" class="text-center px-4 py-2">
-                  No projects available.
-                </td>
+                <td colspan="4" class="text-center">No projects available.</td>
               </tr>
               {% endif %}
             </tbody>
           </table>
         </div>
       </div>
+      </main>
     </div>
   </body>
 </html>

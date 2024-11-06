@@ -1,0 +1,101 @@
+{% load static %} {% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Personal Finance Tracker</title>
+    {% tailwind_css %}
+    <script src="{% static 'htmx.min.js' %}" defer></script>
+  </head>
+
+  <body class="bg-gray-900">
+    <!-- Navbar -->
+    <div class="bg-gray-900 w-full shadow-md">
+      {% include 'core/partials/navbars/navbar_index.html' %}
+    </div>
+
+    <!-- Sidebar and Main Content -->
+    <div class="flex">
+      <!-- Sidebar Below Navbar -->
+      <div class="w-64 h-screen bg-gray-900 border-r border-gray-700">
+        {% include 'core/partials/sidebars/sidebar_index.html' %}
+      </div>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6 bg-gray-900">
+        <div class="overflow-x-auto w-full">
+          <!-- Main Container with centered content, and custom small width -->
+          <div class="max-w-[400px] mx-auto mt-20">
+            {% if successConfigFile%}
+              <div class="bg-green-500 text-white p-4 rounded mb-4">
+                {{successConfigFile}}
+              </div>
+            {% endif %}
+            {% if successFailCode %}
+              <div class="bg-green-500 text-white p-4 rounded mb-4">
+                {{successFailCode}}
+              </div>
+            {% endif %}
+
+
+              {% if not successConfigFile and  not successFailCode %}
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h2 class="text-2xl text-white mb-4">Upload Config File</h2>
+              <form
+                method="POST"
+                action="{% url 'upload_config' project_id %}"
+                enctype="multipart/form-data"
+              >
+                {% csrf_token %}
+
+                <!-- File Input -->
+                <input
+                  type="file"
+                  name="config_file"
+                  accept=".xlsm"
+                  class="mb-4 p-2 rounded border border-gray-300 bg-gray-700 text-white w-full"
+                />
+
+                <!-- Submit Button -->
+                <button
+                  type="submit"
+                  class="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-full"
+                >
+                  Upload
+                </button>
+              </form>
+              {% endif %}
+
+            </div>
+          </div>
+
+          {% if successConfigFile %}
+          <div class="max-w-[400px] mx-auto mt-10">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h2 class="text-2xl text-white mb-4">Fail code</h2>
+              {% if not successFailCode %}
+              <form
+                method="POST"
+                action="{% url 'extract_fail_codes' project_id %}"
+                enctype="multipart/form-data"
+              >
+                {% csrf_token %}
+
+                <!-- Submit Button -->
+                <button
+                  type="submit"
+                  class="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-full"
+                >
+                  Button A
+                </button>
+              </form>
+              {% endif %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

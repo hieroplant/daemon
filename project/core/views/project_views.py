@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from .models import Project
+from ..models import Project
 
 def home(request):
     projects = Project.objects.all()

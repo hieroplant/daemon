@@ -1,6 +1,6 @@
 
 from django.urls import path
-from . import project_views, station_views
+from .views import extract_view, project_views, station_views, fail_code_views
 
 urlpatterns = [
     # Home 
@@ -12,8 +12,17 @@ urlpatterns = [
 
     # Station-related URL patterns
     path('stations/<int:project_id>/', station_views.stations, name='stations'),
-    path('upload_config/<int:project_id>/', station_views.upload_config, name='upload_config'),
     path('delete_station/<int:station_id>/', station_views.delete_station, name='delete_station'),
     path('delete_stations/<int:project_id>/', station_views.delete_stations, name='delete_stations'),
-    path('station/<int:station_id>/', station_views.view_station, name='view_station'),
+    path('extract_config_file/<int:project_id>/', station_views.extract_config_file, name='extract_config_file'),
+    
+    # Fail Code -related URL patterns
+    path('fail_codes/<int:station_id>/', fail_code_views.fail_codes, name='fail_codes'),
+    path('delete_fail_codes/<int:station_id>/', fail_code_views.delete_fail_codes, name='delete_fail_codes'),
+    path('extract_config_file/<int:project_id>/', station_views.extract_config_file, name='extract_config_file'),
+    
+    # extract-related URL patterns
+    path('extract_page/<int:project_id>/', extract_view.extract_page, name='extract_page'),
+    path('upload_config/<int:project_id>/', extract_view.upload_config, name='upload_config'),
+    path('extract_fail_codes/<int:project_id>/', extract_view.extract_fail_codes_view, name='extract_fail_codes'),
 ]

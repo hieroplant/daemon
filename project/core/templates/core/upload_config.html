@@ -11,7 +11,7 @@
     {% tailwind_css %}
 </head>
 
-<body class="bg-gray-700">
+<body class="bg-gray-900">
     {% include 'core/partials/navbar.html' %}
     <div class="flex justify-center items-center h-screen">
         <div class="bg-gray-800 p-8 rounded-lg shadow-lg">
@@ -21,28 +21,13 @@
                 {{ success }}
             </div>
             {% endif %}
-            <form action="{% url 'upload_config' project_id %}" method="POST" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'upload_config' project_id %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input type="file" name="config_file" accept=".xlsm" class="mb-4" id="config-file-input" onchange="checkFileSelected()">
-                <div class="flex justify-between">
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded" id="upload-button" disabled>Upload</button>
-                    <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="window.history.back();">Cancel</button>
-                </div>
+                <input type="file" name="config_file" accept=".xlsm" class="mb-4">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Upload</button>
             </form>
         </div>
     </div>
-
-    <script>
-        function checkFileSelected() {
-            const fileInput = document.getElementById('config-file-input');
-            const uploadButton = document.getElementById('upload-button');
-            if (fileInput.files.length > 0) {
-                uploadButton.disabled = false;
-            } else {
-                uploadButton.disabled = true;
-            }
-        }
-    </script>
 </body>
 
 </html>
