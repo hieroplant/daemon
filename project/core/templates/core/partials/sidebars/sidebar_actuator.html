@@ -29,18 +29,30 @@
   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-900">
     <ul class="space-y-2 font-medium">
       <li>
+        <div class = "bg-gray-700 rounded-lg">
         <span class="flex items-center p-2 text-red-600 rounded-lg dark:text-white ">
-          {% heroicon_outline "fire" %}
-          <span class="ms-3 text-2xl text-white">{{ station.name }}</span>
+          {% heroicon_outline "calculator" %}
+          <span class="border-dotted ms-3 text-1xl text-white">Station ID: {{ station.name }}</span>
         </span>
+      </div>
       </li>
+
       <li>
+        <div class = "bg-gray-700 rounded-lg">
+          <span class="flex items-center p-2 text-red-400 rounded-lg dark:text-white ">
+            {% heroicon_outline "home-modern" %}
+            <span class="ms-3 text-1xl text-white">{{ station.description }}</span>
+          </span>
+        </div>
+        </li>
+        
+        <li>
         <a
           href="{% url 'delete_fail_codes' station_id %}"
           class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 hover:text-black"
         >
-          {% heroicon_outline "plus-circle" %}
-          <span class="ms-3">Delete stations</span>
+          {% heroicon_outline "backspace" %}
+          <span class="ms-3">Delete Fail Codes</span>
         </a>
       </li>
     </ul>

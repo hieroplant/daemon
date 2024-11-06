@@ -18,8 +18,9 @@ urlpatterns = [
     
     # Fail Code -related URL patterns
     path('fail_codes/<int:station_id>/', fail_code_views.fail_codes, name='fail_codes'),
+    path('delete_fail_code/<int:fail_code_id>/', fail_code_views.delete_fail_code, name='delete_fail_code'),
     path('delete_fail_codes/<int:station_id>/', fail_code_views.delete_fail_codes, name='delete_fail_codes'),
-    path('extract_config_file/<int:project_id>/', station_views.extract_config_file, name='extract_config_file'),
+
     
     # extract-related URL patterns
     path('extract_page/<int:project_id>/', extract_view.extract_page, name='extract_page'),

@@ -13,3 +13,9 @@ def delete_fail_codes(request, station_id):
         Failcode.objects.filter(station=station).delete()
         return redirect('fail_codes', station_id=station_id)
     return render(request, 'core/delete_fail_codes.html', {'station': station})
+
+def delete_fail_code(request, fail_code_id):
+    fail_code = get_object_or_404(Failcode, id=fail_code_id)
+    station_id = fail_code.station.id
+    fail_code.delete()
+    return redirect('fail_codes', station_id=station_id)
