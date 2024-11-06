@@ -19,81 +19,86 @@
     <div class="flex">
       <!-- Sidebar Below Navbar -->
       <div class="w-64 h-screen bg-gray-900 border-r border-gray-700">
-        {% include 'core/partials/sidebars/sidebar_station.html' with project_id=project.id  %}
+        {% include 'core/partials/sidebars/sidebar_index.html' %}
       </div>
 
       <!-- Main Content -->
-      <main class="flex-1 p-6 bg-gray-900">W
+      <main class="flex-1 p-6 bg-gray-900">
         <div class="overflow-x-auto w-full">
           <div class="max-w-8xl mx-auto">
-          <table class="table w-full bg-gray-900 text-white mt-5">
-            <thead class="text-lg text-white">W
-              <tr>
-                <th class="px-4 py-4 w-1/10">No.</th>
-                <th class="px-4 py-4 w-3/10">station Name</th>
-                <th class="px-4 py-4 w-3/5">station Description</th>
-                <th class="px-4 py-4 w-2/10"></th>
-              </tr>
-            </thead>
-            <tbody class="text-base">
-              {% if stations %} {% for station in stations %}
-              <tr class="hover:bg-gray-600">
-                <th class="px-4 py-2">{{ forloop.counter }}</th>
-                <td class="px-4 py-2">{{ station.name }}</td>
-                <td class="px-4 py-2">{{ station.description }}</td>
-                <td class="px-4 py-2">
-                  <div class="flex items-center justify-end space-x-4">
-                    
-                    <form
-                      method="GET"
-                      action="{% url 'fail_codes' station.id %}"
-                      style="display: inline"
-                    >
-                      <button type="submit" class="btn btn-secondary">
-                        Fail Code
-                      </button>
-                    </form>
-                    <form
-                      method="GET"
-                      action="{% url 'fail_codes' station.id %}"
-                      style="display: inline"
-                    >
-                      <button type="submit" class="btn btn-primary">
-                        Actuator
-                      </button>
-                    </form>
-                    <form
-                      method="POST"
-                      action="{% url 'delete_station' station.id %}"
-                      onsubmit="return confirm('Are you sure you want to delete this station?');"
-                      hx-delete
-                      hx-target="#station-{{ station.id }}"
-                      hx-swap="outerHTML"
-                      class="mr-2"
-                    >
-                      {% csrf_token %}
+            <table class="table w-full bg-gray-900 text-white mt-20">
+              <thead class="text-lg text-white">
+                <tr>
+                  {%if stations %}
+                  <th class="px-4 py-4 w-1/10">No.</th>
+                  <th class="px-4 py-4 w-3/10">station Name</th>
+                  <th class="px-4 py-4 w-3/5">station Description</th>
+                  <th class="px-4 py-4 w-2/10"></th>
+                  {%endif%}
+                </tr>
+              </thead>
+              <tbody class="text-base">
+                {% if stations %} {% for station in stations %}
+                <tr class="hover:bg-gray-600">
+                  <th class="px-4 py-2">{{ forloop.counter }}</th>
+                  <td class="px-4 py-2">{{ station.name }}</td>
+                  <td class="px-4 py-2">{{ station.description }}</td>
+                  <td class="px-4 py-2">
+                    <div class="flex items-center justify-end space-x-4">
+                      <form
+                        method="GET"
+                        action="{% url 'fail_codes' station.id %}"
+                        style="display: inline"
+                      >
+                        <button type="submit" class="btn btn-secondary">
+                          Fail Code
+                        </button>
+                      </form>
+                      <form
+                        method="GET"
+                        action="{% url 'fail_codes' station.id %}"
+                        style="display: inline"
+                      >
+                        <button type="submit" class="btn btn-primary">
+                          Actuator
+                        </button>
+                      </form>
+                      <form
+                        method="POST"
+                        action="{% url 'delete_station' station.id %}"
+                        onsubmit="return confirm('Are you sure you want to delete this station?');"
+                        hx-delete
+                        hx-target="#station-{{ station.id }}"
+                        hx-swap="outerHTML"
+                        class="mr-2"
+                      >
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-ghost">
+                          Delete
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+                %{endif} {% endfor %} {% else %}
+                <tr class="text-white h-12">
+                  <td colspan="4" class="text-center">
+                    <div>No stations available.</div>
+                    <div>
                       <button
-                        type="submit"
-                        class="btn btn-ghost">
-                        Delete
-                      </button>
-                    </form>
-                  </div>
-                </td>
-              </tr>
-              {% endfor %} {% else %}
-              <tr class="text-white h-12">
-                <td colspan="4" class="text-center">No stations available.
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="window.location.href='{% url 'extract_page' project.id %}'">
+                        class="btn btn-secondary mt-5"
+                        onclick="window.location.href='{% url 'extract_page' project.id %}'"
+                      >
                         Upload config file
-                    </button>
-                </td>
-              </tr>
-              {% endif %}
-            </tbody>
-          </table>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
       </main>
     </div>
   </body>

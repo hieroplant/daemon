@@ -29,24 +29,32 @@
   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-900">
     <ul class="space-y-2 font-medium">
       <li>
-        <div class = "bg-gray-700 rounded-lg">
-        <span class="flex items-center p-2 text-red-600 rounded-lg dark:text-white ">
-          {% heroicon_outline "calculator" %}
-          <span class="border-dotted ms-3 text-1xl text-white">Station ID: {{ station.name }}</span>
-        </span>
-      </div>
+        <div class="bg-gray-700 rounded-lg">
+          <span
+            class="flex items-center p-2 fill-yellow-500 rounded-lg dark:text-white"
+          >
+            {% heroicon_outline "calculator" class="text-blue-500"%}
+            <span class="border-dotted ms-3 text-1xl text-white"
+              >Station ID: {{ station.name }}</span
+            >
+          </span>
+        </div>
       </li>
 
       <li>
-        <div class = "bg-gray-700 rounded-lg">
-          <span class="flex items-center p-2 text-red-400 rounded-lg dark:text-white ">
+        <div class="bg-gray-700 rounded-lg">
+          <span
+            class="flex items-center p-2 text-red-400 rounded-lg dark:text-white"
+          >
             {% heroicon_outline "home-modern" %}
-            <span class="ms-3 text-1xl text-white">{{ station.description }}</span>
+            <span class="ms-3 text-1xl text-white"
+              >{{ station.description }}</span
+            >
           </span>
         </div>
-        </li>
-        
-        <li>
+      </li>
+
+      <li>
         <a
           href="{% url 'delete_fail_codes' station_id %}"
           class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 hover:text-black"
