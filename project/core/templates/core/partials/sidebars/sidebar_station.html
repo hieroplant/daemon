@@ -27,24 +27,66 @@
   aria-label="Sidebar"
 >
   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-900">
+    <div class = "mt-2">
     <ul class="space-y-2 font-medium">
       <li>
-        <span
-          class="flex items-center p-2 text-red-600 rounded-lg dark:text-white"
+        <div class="bg-gray-700 rounded-lg">
+          <span
+            class="flex items-center p-2 fill-yellow-500 rounded-lg dark:text-white"
+          >
+            {% heroicon_outline "calculator" class="text-red-700"%}
+            <span class="border-dotted ms-3 text-1xl text-white"
+              >Station ID: {{ station.name }}</span
+            >
+          </span>
+        </div>
+      </li>
+
+      <li>
+        <div class="bg-gray-700 rounded-lg">
+          <span
+            class="flex items-center p-2 text-red-400 rounded-lg dark:text-white"
+          >
+            {% heroicon_outline "home-modern" %}
+            <span class="ms-3 text-1xl text-white"
+              >{{ station.description }}</span
+            >
+          </span>
+        </div>
+      </li>
+</ul>
+
+    </div>
+    <div class = "mt-10">
+    <ul>
+      <li>
+        <a
+          href="{% url 'station' station_id %}"
+          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 hover:text-black"
         >
-          {% heroicon_outline "fire" %}
-          <span class="ms-3 text-2xl text-white">{{ project.name }}</span>
-        </span>
+          {% heroicon_outline "backspace" %}
+          <span class="ms-3 text-2">Fail Code</span>
+        </a>
       </li>
       <li>
         <a
-          href="{% url 'delete_stations' project_id %}"
+          href="{% url 'actuators' station_id %}"
           class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 hover:text-black"
         >
-          {% heroicon_outline "plus-circle" %}
-          <span class="ms-3">Delete stations</span>
+          {% heroicon_outline "backspace" %}
+          <span class="ms-3">Actuator</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="{% url 'delete_fail_codes' station_id %}"
+          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 hover:text-black"
+        >
+          {% heroicon_outline "backspace" %}
+          <span class="ms-3">Actuator</span>
         </a>
       </li>
     </ul>
   </div>
+</div>
 </aside>

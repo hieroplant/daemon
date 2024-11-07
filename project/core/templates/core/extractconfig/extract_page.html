@@ -28,18 +28,21 @@
           <!-- Main Container with centered content, and custom small width -->
           <div class="max-w-[400px] mx-auto mt-20">
             {% if successConfigFile%}
-              <div class="bg-green-500 text-white p-4 rounded mb-4">
-                {{successConfigFile}}
-              </div>
-            {% endif %}
-            {% if successFailCode %}
-              <div class="bg-green-500 text-white p-4 rounded mb-4">
-                {{successFailCode}}
-              </div>
-            {% endif %}
+            <div class="bg-green-500 text-white p-4 rounded mb-4">
+              {{successConfigFile}}
+            </div>
+            {% endif %} {% if successFailCode %}
+            <div class="bg-green-500 text-white p-4 rounded mb-4">
+              {{successFailCode}}
+            </div>
+            {% endif %} 
+             {% if successActuator %}
+            <div class="bg-green-500 text-white p-4 rounded mb-4">
+              {{successActuator}}
+            </div>
+            {% endif %} 
 
-
-              {% if not successConfigFile and  not successFailCode %}
+            {% if not successConfigFile and not successFailCode and not successActuator %}
             <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
               <h2 class="text-2xl text-white mb-4">Upload Config File</h2>
               <form
@@ -49,7 +52,6 @@
               >
                 {% csrf_token %}
 
-                <!-- File Input -->
                 <input
                   type="file"
                   name="config_file"
@@ -57,45 +59,81 @@
                   class="mb-4 p-2 rounded border border-gray-300 bg-gray-700 text-white w-full"
                 />
 
-                <!-- Submit Button -->
                 <button
                   type="submit"
                   class="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-full"
+                  onclick="disableButton(this)"
                 >
                   Upload
                 </button>
               </form>
               {% endif %}
-
             </div>
           </div>
 
-          {% if successConfigFile %}
-          <div class="max-w-[400px] mx-auto mt-10">
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h2 class="text-2xl text-white mb-4">Fail code</h2>
-              {% if not successFailCode %}
-              <form
-                method="POST"
-                action="{% url 'extract_fail_codes' project_id %}"
-                enctype="multipart/form-data"
-              >
-                {% csrf_token %}
+                    <!-- Extract Fail Codes -->
+                    {% if successConfigFile and not successActuator %}
+                    <div class="max-w-[400px] mx-auto mt-10">
+                        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl text-white mb-4">Fail code</h2>
+                            {% if not successFailCode %}
+                            <form
+                                method="POST"
+                                action="{% url 'extract_fail_codes' project_id %}"
+                                enctype="multipart/form-data"
+                            >
+                                {% csrf_token %}
 
-                <!-- Submit Button -->
-                <button
-                  type="submit"
-                  class="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-full"
-                >
-                  Button A
-                </button>
-              </form>
-              {% endif %}
+                                <!-- Submit Button -->
+                                <button
+                                    type="submit"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-full"
+                                    onclick="disableButton(this)"
+                                >
+                                    Extract Fail Code
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Extract Actuators -->
+                    {% if successFailCode %}
+                    <div class="max-w-[400px] mx-auto mt-10">
+                        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl text-white mb-4">Actuators</h2>
+                            {% if not successActuator %}
+                            <form
+                                method="POST"
+                                action="{% url 'extract_actuators' project_id %}"
+                                enctype="multipart/form-data"
+                            >
+                                {% csrf_token %}
+
+                                <!-- Submit Button -->
+                                <button
+                                    type="submit"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-full"
+                                    onclick="disableButton(this)"
+                                >
+                                    Extract Actuators
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
-            {% endif %}
-          </div>
-        </div>
-      </main>
+        </main>
     </div>
-  </body>
+    <script>
+      function disableButton(button) {
+          button.disabled = true;
+          button.innerText = 'Processing...';
+          button.form.submit();
+      }
+  </script>
+</body>
 </html>

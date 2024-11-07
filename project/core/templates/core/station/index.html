@@ -9,12 +9,12 @@
     {% tailwind_css %}
 </head>
 <body class="bg-gray-900">
-    {% include 'core/partials/navbar.html' %}
+    {% include 'core/partials/navbars/navbar_index.html' %}
     <div class="flex">
         <div class="w-64 h-screen bg-gray-900 border-r border-gray-900">
-            {% include 'core/partials/sidebars/sidebar_fail_code.html' with station_id=station.id %}
+            {% include 'core/partials/sidebars/sidebar_station.html' with station_id=station.id %}
         </div>
-        <main class="flex-1 p-6 bg-gray-900">
+        <main class="flex-1 p-6 bg-gray-900 mt-10">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
                 {% if fail_codes %}
                     {% for fail_code in fail_codes %}
@@ -24,7 +24,7 @@
                             <div class="flex justify-start items-center space-x-2">
                                 <form method="POST" action="{% url 'delete_fail_code' fail_code.id %}" onsubmit="return confirm('Are you sure you want to delete this fail code?');" hx-delete hx-target="#fail_code-{{ fail_code.id }}" hx-swap="outerHTML">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-ghost">Delete</button>
+                                    <button type="submit" class="btn btn-primary">Delete</button>
                                 </form>
                             </div>
                         </div>

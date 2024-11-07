@@ -1,0 +1,95 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actuators</title>
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-900">
+    {% include 'core/partials/navbar.html' %}
+    <div class="flex">
+        <div class="w-64 h-screen bg-gray-900 border-r border-gray-900">
+            {% include 'core/partials/sidebars/sidebar_station.html' with station_id=station.id %}
+        </div>
+        <main class="flex-1 p-6 bg-gray-900">
+            <div class="overflow-x-auto w-full">
+                <div class="max-w-8xl mx-auto">
+                    <table class="table w-full bg-gray-900 text-white mt-5">
+                        <thead class="text-lg text-white">
+                            <tr>
+                                <th class="px-4 py-4 w-1/10">No.</th>
+                                <th class="px-4 py-4 w-3/10">ID</th>
+                                <th class="px-4 py-4 w-3/10">Name</th>
+                                <th class="px-4 py-4 w-3/10">Index</th>
+                                <th class="px-4 py-4 w-3/10">Data Type</th>
+                                <th class="px-4 py-4 w-3/10">Prefix</th>
+                                <th class="px-4 py-4 w-3/10">Output</th>
+                                <th class="px-4 py-4 w-3/10">Output Description</th>
+                                <th class="px-4 py-4 w-3/10">Input</th>
+                                <th class="px-4 py-4 w-3/10">Input Description</th>
+                                <th class="px-4 py-4 w-3/10">ALM 0</th>
+                                <th class="px-4 py-4 w-3/10">ALM 1</th>
+                                <th class="px-4 py-4 w-3/10">ALM 0 Desc Lang 1</th>
+                                <th class="px-4 py-4 w-3/10">ALM 0 Desc Lang 2</th>
+                                <th class="px-4 py-4 w-3/10">ALM 0 Desc Lang 3</th>
+                                <th class="px-4 py-4 w-3/10">ALM 1 Desc Lang 1</th>
+                                <th class="px-4 py-4 w-3/10">ALM 2 Desc Lang 2</th>
+                                <th class="px-4 py-4 w-3/10">ALM 3 Desc Lang 3</th>
+                                <th class="px-4 py-4 w-3/10">ALM 0 Procedure</th>
+                                <th class="px-4 py-4 w-3/10">ALM 1 Procedure</th>
+                                <th class="px-4 py-4 w-3/10">ALM 0 Bad</th>
+                                <th class="px-4 py-4 w-3/10">ALM 1 Bad</th>
+                                <th class="px-4 py-4 w-3/10">ALM 0 Cause</th>
+                                <th class="px-4 py-4 w-3/10">ALM 1 Cause</th>
+                                <th class="px-4 py-4 w-3/10">ALM 0 Action</th>
+                                <th class="px-4 py-4 w-3/10">ALM 1 Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-base">
+                            {% if actuators %}
+                                {% for actuator in actuators %}
+                                    <tr class="hover:bg-gray-600">
+                                        <th class="px-4 py-2">{{ forloop.counter }}</th>
+                                        <td class="px-4 py-2">{{ actuator.actuator_id }}</td>
+                                        <td class="px-4 py-2">{{ actuator.name }}</td>
+                                        <td class="px-4 py-2">{{ actuator.index }}</td>
+                                        <td class="px-4 py-2">{{ actuator.data_type }}</td>
+                                        <td class="px-4 py-2">{{ actuator.prefix }}</td>
+                                        <td class="px-4 py-2">{{ actuator.actuator_output }}</td>
+                                        <td class="px-4 py-2">{{ actuator.output_description }}</td>
+                                        <td class="px-4 py-2">{{ actuator.actuator_input }}</td>
+                                        <td class="px-4 py-2">{{ actuator.input_description }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_0 }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_1 }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_0_description_language_1 }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_0_description_language_2 }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_0_description_language_3 }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_1_description_language_1 }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_2_description_language_2 }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_3_description_language_3 }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_0_procedure }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_1_procedure }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_0_bad }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_1_bad }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_0_cause }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_1_cause }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_0_action }}</td>
+                                        <td class="px-4 py-2">{{ actuator.alm_1_action }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr class="text-white h-12">
+                                    <td colspan="26" class="text-center">No actuators available.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

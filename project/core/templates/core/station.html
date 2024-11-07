@@ -4,7 +4,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Personal Finance Tracker</title>
     {% tailwind_css %}
     <script src="{% static 'htmx.min.js' %}" defer></script>
   </head>
@@ -19,87 +18,43 @@
     <div class="flex">
       <!-- Sidebar Below Navbar -->
       <div class="w-64 h-screen bg-gray-900 border-r border-gray-700">
-        {% include 'core/partials/sidebars/sidebar_index.html' %}
+        {% include 'core/partials/sidebars/sidebar_stations.html' with project_id=project.id %}
       </div>
 
       <!-- Main Content -->
-      <main class="flex-1 p-6 bg-gray-900">
-        <div class="overflow-x-auto w-full">
-          <div class="max-w-8xl mx-auto">
-            <table class="table w-full bg-gray-900 text-white mt-20">
-              <thead class="text-lg text-white">
-                <tr>
-                  {%if stations %}
-                  <th class="px-4 py-4 w-1/10">No.</th>
-                  <th class="px-4 py-4 w-3/10">station Name</th>
-                  <th class="px-4 py-4 w-3/5">station Description</th>
-                  <th class="px-4 py-4 w-2/10"></th>
-                  {%endif%}
-                </tr>
-              </thead>
-              <tbody class="text-base">
-                {% if stations %} {% for station in stations %}
-                <tr class="hover:bg-gray-600">
-                  <th class="px-4 py-2">{{ forloop.counter }}</th>
-                  <td class="px-4 py-2">{{ station.name }}</td>
-                  <td class="px-4 py-2">{{ station.description }}</td>
-                  <td class="px-4 py-2">
-                    <div class="flex items-center justify-end space-x-4">
-                      <form
-                        method="GET"
-                        action="{% url 'fail_codes' station.id %}"
-                        style="display: inline"
-                      >
-                        <button type="submit" class="btn btn-secondary">
-                          Fail Code
-                        </button>
-                      </form>
-                      <form
-                        method="GET"
-                        action="{% url 'fail_codes' station.id %}"
-                        style="display: inline"
-                      >
-                        <button type="submit" class="btn btn-primary">
-                          Actuator
-                        </button>
-                      </form>
-                      <form
-                        method="POST"
-                        action="{% url 'delete_station' station.id %}"
-                        onsubmit="return confirm('Are you sure you want to delete this station?');"
-                        hx-delete
-                        hx-target="#station-{{ station.id }}"
-                        hx-swap="outerHTML"
-                        class="mr-2"
-                      >
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-ghost">
-                          Delete
-                        </button>
-                      </form>
-                    </div>
-                  </td>
-                </tr>
-                %{endif} {% endfor %} {% else %}
-                <tr class="text-white h-12">
-                  <td colspan="4" class="text-center">
-                    <div>No stations available.</div>
-                    <div>
-                      <button
-                        class="btn btn-secondary mt-5"
-                        onclick="window.location.href='{% url 'extract_page' project.id %}'"
-                      >
-                        Upload config file
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                {% endif %}
-              </tbody>
-            </table>
-          </div>
+      <main class="flex-1 p-6 bg-gray-900 mt-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+          {% if stations %}
+              {% for station in stations %}
+                  <div class="bg-gray-800 text-white rounded-lg shadow-lg p-4">
+                      <h3 class="text-lg font-semibold mb-2">Station ID: {{ station.name }}</h3>
+                      <p class="text-sm text-gray-400 mb-4">Station Description:{{ station.description }}</p>
+                      <div class="flex justify-start items-center space-x-2">
+                          <form method="GET" action="{% url 'station' station.id %}">
+                              <button type="submit" class="btn btn-primary">Detail</button>
+                          </form>
+                          <form method="POST" action="{% url 'delete_station' station.id %}" onsubmit="return confirm('Are you sure you want to delete this station?');" hx-delete hx-target="#station-{{ station.id }}" hx-swap="outerHTML">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-primary">Delete</button>
+                          </form>
+                      </div>
+                  </div>
+              {% endfor %}
+          {% else %}
+              <div class="col-span-full text-center text-white">
+                  <div>No stations available.</div>
+                  <div>
+                      <button class="btn btn-secondary mt-5" onclick="window.location.href='{% url 'extract_page' project.id %}'">Upload config file</button>
+                  </div>
+              </div>
+          {% endif %}
         </div>
       </main>
     </div>
   </body>
 </html>
+
+
+
+  
+

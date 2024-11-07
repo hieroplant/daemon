@@ -1,0 +1,46 @@
+<!-- sidebar.html -->
+<div class="flex">
+    <!-- Sidebar -->
+    <div id="sidebar" class="w-64 bg-gray-800 text-white p-4 fixed inset-0 lg:left-0 lg:top-0 lg:h-full lg:translate-x-0 transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+        <div class="flex items-center justify-between">
+            <!-- Sidebar Header -->
+            <h2 class="text-lg font-semibold">Dashboard</h2>
+            <button id="sidebar-close" class="text-white lg:hidden">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar Links -->
+        <div class="mt-6">
+            <a href="#" class="block text-white hover:bg-gray-700 px-4 py-2 rounded">Home</a>
+            <a href="#" class="block text-white hover:bg-gray-700 px-4 py-2 rounded">Profile</a>
+            <a href="#" class="block text-white hover:bg-gray-700 px-4 py-2 rounded">Settings</a>
+            <a href="#" class="block text-white hover:bg-gray-700 px-4 py-2 rounded">Reports</a>
+            <a href="#" class="block text-white hover:bg-gray-700 px-4 py-2 rounded">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 ml-64 p-6">
+        <!-- Content goes here -->
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+<!-- Mobile Sidebar Button -->
+<div class="lg:hidden fixed top-0 left-0 p-4 z-40">
+    <button id="sidebar-open" class="text-white">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
+
+<script>
+    document.getElementById('sidebar-open').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('-translate-x-full');
+    });
+
+    document.getElementById('sidebar-close').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.add('-translate-x-full');
+    });
+</script>

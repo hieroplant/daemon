@@ -1,27 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from ..models import Project, Station
+from ..models import Project, Station, Actuator
 
-def stations(request, project_id):
-    project = get_object_or_404(Project, id=project_id)
-    stations = Station.objects.filter(project=project)
-    return render(request, 'core/station.html', {'stations': stations, 'project': project})
-
-def delete_stations(request, project_id):
-    project = get_object_or_404(Project, id=project_id)
-    if request.method == "POST":
-        Station.objects.filter(project=project).delete()
-        return redirect('stations', project_id=project_id)
-    return render(request, 'core/delete_stations.html', {'project': project})
-
-def delete_station(request, station_id):
+def station(request, station_id):
     station = get_object_or_404(Station, id=station_id)
-    project_id = station.project.id
-    station.delete()
-    return redirect('stations', project_id=project_id)
+    fail_codes = station.failcodes.all()
+    return render(request, 'core/station/index.html', {'fail_codes': fail_codes, 'station': station})
 
-def extract_config_file(request, project_id):
-    project = get_object_or_404(Project, id=project_id)
-    stations = Station.objects.filter(project=project)
-    return render(request, 'core/extractconfig/extract_page.html', {'project': project})
-
+def actuators(request, station_id):
+    station = get_object_or_404(Station, id=station_id)
+    actuators = Actuator.objects.filter(station=station)
+    return render(request, 'core/station/actuators.html', {'actuators': actuators, 'station': station})
